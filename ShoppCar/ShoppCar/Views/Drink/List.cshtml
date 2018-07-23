@@ -1,0 +1,30 @@
+﻿<div>
+    <h2>All drinks are shown here</h2>
+</div>
+
+<h2>@Model.CurrentCategory</h2>
+
+<div class="row">
+    @{
+        foreach (var drink in Model.Drinks)
+        {
+            <div class="col-md-4">
+                <div class="card mb-4 box-shadow">
+                    <img class="card-img-top" src="@drink.ImageThumbnailUrl" alt="Card image cap">
+                    <div class="card-body">
+                        <h3 class="p-4">@drink.Price.ToString("c")</h3>
+                        <h4><a href="#">@drink.Name</a></h4>
+                        <p class="card-text">@drink.ShortDescription</p>
+                        @*<div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                                <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                            </div>
+                            <small class="text-muted">9 mins</small>
+                        </div>*@
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>
