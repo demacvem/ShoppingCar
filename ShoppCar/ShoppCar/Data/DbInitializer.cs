@@ -10,19 +10,18 @@ namespace ShoppCar.Data
 {
     public class DbInitializer
     {
-        public static void Seed(IApplicationBuilder applicationBuilder)
+        public static void Seed(AppDbContext context)
         {
-            AppDbContext context =
-                applicationBuilder.ApplicationServices.GetRequiredService<AppDbContext>();
+            AppDbContext _context = context;
 
-            if (!context.Categories.Any())
+            if (!_context.Categories.Any())
             {
-                context.Categories.AddRange(Categories.Select(c => c.Value));
+                _context.Categories.AddRange(Categories.Select(c => c.Value));
             }
 
-            if (!context.Drinks.Any())
+            if (!_context.Drinks.Any())
             {
-                context.AddRange
+                _context.AddRange
                 (
                     new Drink
                     {
@@ -255,7 +254,7 @@ namespace ShoppCar.Data
                 );
             }
 
-            context.SaveChanges();
+            _context.SaveChanges();
         }
 
         private static Dictionary<string, Category> categories;

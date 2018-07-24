@@ -1,0 +1,19 @@
+﻿@model Drink
+
+<div class="col-md-4">
+    <div class="card mb-4 box-shadow">
+        <img class="card-img-top" src="@Model.ImageThumbnailUrl" alt="Card image cap">
+        <div class="card-body">
+            <h3 class="p-4">@Model.Price.ToString("c")</h3>
+            <h4><a href="#">@Model.Name</a></h4>
+            <p class="card-text">@Model.ShortDescription</p>
+            @*<div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                    </div>
+                    <small class="text-muted">9 mins</small>
+                </div>*@
+        </div>
+    </div>
+</div>
