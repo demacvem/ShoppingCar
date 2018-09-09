@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using ShoppCar.Data;
 using ShoppCar.Data.Interfaces;
 using ShoppCar.Data.Mocks;
+using ShoppCar.Data.Models;
 using ShoppCar.Data.Repositories;
 
 namespace ShoppCar
@@ -38,7 +39,12 @@ namespace ShoppCar
 
             services.AddTransient<IDrinkRepository, DrinkRepository>();
             services.AddTransient<ICategoryRepository, CategoryRepository>();
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped(sp => ShoppingCart.GetCart(sp));
             services.AddMvc();
+            services.AddMemoryCache();
+            services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,8 +54,15 @@ namespace ShoppCar
             app.UseDeveloperExceptionPage();
             app.UseStatusCodePages();
             app.UseStaticFiles();
-            app.UseMvcWithDefaultRoute();
-            DbInitializer.Seed(serviceProvider.GetRequiredService<AppDbContext>());
+            app.UseSession();
+            //app.UseMvcWithDefaultRoute();
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(name: "categoryFilter", template: "Drink/{action}/{category?}", defaults: new { Controller = "Drink", action = "List" });
+                routes.MapRoute(name: "default", template: "{controller=Home}/{action=Index}/{id?}");
+            });
+
+            //DbInitializer.Seed(serviceProvider.GetRequiredService<AppDbContext>());
         }
     }
 }
